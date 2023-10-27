@@ -18,7 +18,8 @@ const port = 3000;
  * Import the database connection file.
  */
 const sequelize = require("./config/database.js");
-const {Profile, ProfileIdentification} = require("./dataModels/profile")
+const {Profile, ProfileIdentification} = require("./dataModels/profileModels")
+require("./routes/workoutRouter")(app)
 
 /**
  * Create a anonymous function to establish the database connection.

@@ -1,17 +1,10 @@
-const express = require("express");
-const router = express.Router();
-const workoutService = require("../services/workoutService");
+module.exports = app => {
+    const router = require("express").Router();
+    const workoutService = require("../services/workoutService");
 
-router.get("/", async function(req, res, next) {
-    try {
-        res.json(await workoutService.getAll())
-    } catch (error) {
-        console.error("Error when getting workouts: ", error.message)
-        next(error)
-    }
-})
-
-
-module.exports = {
-    router
+    router.get("/:type", workoutService.findAllByType)
+    router.get("/", workoutService.findAll)
+    router.post("/", workoutService.create)
+    app.use("/api/workout", router)
 }
+
