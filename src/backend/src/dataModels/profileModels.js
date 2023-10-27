@@ -55,9 +55,5 @@ const Profile = sequelize.define("profile",{
     }
 })
 
-Profile.hasOne(ProfileIdentification)
-ProfileIdentification.belongsTo(Profile)
-ProfileInterests.belongsTo(Profile)
-Profile.hasOne(ProfileInterests)
-
 module.exports = {Profile, ProfileIdentification, ProfileInterests}
+
