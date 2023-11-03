@@ -16,17 +16,6 @@ const ProfileIdentification = sequelize.define("profileIdentification", {
     }
 })
 
-const ProfileInterests = sequelize.define("profileInterest", {
-    profileId: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        references: {
-            model: Profile,
-            key: "id"
-        }
-    }
-})
-
 const Profile = sequelize.define("profile",{
     id: {
         type: DataTypes.INTEGER,
@@ -52,6 +41,17 @@ const Profile = sequelize.define("profile",{
     },
     height: {
         type: DataTypes.INTEGER
+    }
+})
+
+const ProfileInterests = sequelize.define("profileInterest", {
+    profileId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        references: {
+            model: Profile,
+            key: "id"
+        }
     }
 })
 

@@ -1,6 +1,10 @@
 const {Op} = require("sequelize")
 const sequelize = require("./database");
-const {Workout, WorkoutDay, Exercise, WorkoutProgram} = require("../dataModels/workoutModels")
+const {Profile, ProfileIdentification, ProfileInterests} = require("../dataModels/profileModels")
+const Message = require("../dataModels/messageModels")
+const Activity = require("../dataModels/activityModels")
+const {Exercise, Workout, WorkoutDay, WorkoutProgram} = require("../dataModels/workoutModels")
+require("../dataModels/associations")
 
 async function startDb(){
     try {
@@ -16,20 +20,21 @@ async function startDb(){
     }
 }
 
-// startDb().then(e => {
+startDb().then(e => {
 //     sequelize.drop().then(e => {
 //     console.log("Dropped all tables")
 // })
-// })
-startDb().then(e => {
-
-    createMockData().then(e => {
-        console.log("Mock Data created!!")
-    }).catch(e => {
-        console.error("Mock data failed!")
-    })
-    console.log("DB created!")
+    console.log("DB synced!")
 })
+// startDb().then(e => {
+//
+//     createMockData().then(e => {
+//         console.log("Mock Data created!!")
+//     }).catch(e => {
+//         console.error("Mock data failed!")
+//     })
+//     console.log("DB created!")
+// })
 
 async function createMockData(){
     try {

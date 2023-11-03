@@ -1,47 +1,29 @@
-/**
- * Import express and store in a constant.
- */
 const express = require("express");
-
-/**
- * Create an express application by running express as a function,
- * and store it to a constant.
- */
 const app = express();
 
-/**
- * Define the port number that the express application should use.
- */
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+
 const port = 3000;
 
-/**
- * Import the database connection file.
- */
 const sequelize = require("./config/database.js");
-const {Profile, ProfileIdentification} = require("./dataModels/profileModels")
+require("./dataModels/associations")
 require("./routes/workoutRouter")(app)
+require("./routes/profileRouter")(app)
 
-/**
- * Create a anonymous function to establish the database connection.
- * After the connection is established, start the server.
- */
+app.get("/", (req, res) => {
+    res.json({message: "Welcome to the workout tracker application."});
+})
+
 const initApp = async () => {
-    console.log("Testing the database connection..");
-    /**
-     * Test the connection.
-     * You can use the .authenticate() function to test if the connection works.
-     */
     try {
         await sequelize.authenticate();
         console.log("Connection has been established successfully.");
 
-        await sequelize.sync({force: true}).then(() => {
+        await sequelize.sync({alter: true}).then(() => {
             console.log("DB Sync was successful!")
         })
 
-        /**
-         * Start the web server on the specified port.
-         */
         app.listen(port, () => {
             console.log(`Server is up and running at: http://localhost:${port}`);
         });
@@ -50,7 +32,4 @@ const initApp = async () => {
     }
 };
 
-/**
- * Initialize the application.
- */
-initApp();
+initApp().then(e => {console.log("App initialized!")});

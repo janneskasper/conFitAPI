@@ -1,3 +1,4 @@
+const workoutService = require("../services/workoutService");
 module.exports = app => {
     const router = require("express").Router();
     const workoutService = require("../services/workoutService");
@@ -7,4 +8,3 @@ module.exports = app => {
     // router.post("/", workoutService.create)
     app.use("/api/workout", router)
 }
-

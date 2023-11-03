@@ -1,6 +1,6 @@
 const db = require("../config/database")
-const {Exercise,Workout,WorkoutDay,WorkoutProgram} = require("../dataModels/workoutModels")
 const {where} = require("sequelize");
+const {Exercise,Workout,WorkoutDay,WorkoutProgram} = require("../dataModels/workoutModels")
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
@@ -16,7 +16,7 @@ exports.create = (req, res) => {
         workoutType: req.body.workoutType
     };
 
-    wk.create(workout)
+    Workout.create(workout)
         .then(data => {res.send(data)})
         .catch(err => {res.status(500).send({message: err.message || "Error occurred while creating workout"})})
 };
@@ -29,7 +29,7 @@ exports.findAll = (req, res) => {
         });
         return;
     }
-    wk.findAll({
+    Workout.findAll({
         limit: maxRes
     }).then(data => {res.send(data)})
         .catch(err => {res.status(500).send({message: err.message || "Error in select all"})})
