@@ -1,6 +1,6 @@
 const db = require("../config/database")
 const {Op} = require("sequelize")
-const {ProfileInterests, Profile, ProfileIdentification} = require("../dataModels/profileModels")
+const {ProfileInterests, Profile, ProfileIdentification} = require("../dataModels/models/profileModels")
 
 exports.findAllProfiles = (req, res) => {
     const maxRes = req.query.max ? req.query.max: undefined

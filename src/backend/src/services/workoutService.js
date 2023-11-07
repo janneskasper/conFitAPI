@@ -1,6 +1,6 @@
 const db = require("../config/database")
 const {where} = require("sequelize");
-const {Exercise,Workout,WorkoutDay,WorkoutProgram} = require("../dataModels/workoutModels")
+const {Exercise,Workout,WorkoutDay,WorkoutProgram} = require("../dataModels/models/workoutModels")
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {

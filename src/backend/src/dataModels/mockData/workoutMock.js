@@ -1,40 +1,7 @@
 const {Op} = require("sequelize")
-const sequelize = require("./database");
-const {Profile, ProfileIdentification, ProfileInterests} = require("../dataModels/profileModels")
-const Message = require("../dataModels/messageModels")
-const Activity = require("../dataModels/activityModels")
-const {Exercise, Workout, WorkoutDay, WorkoutProgram} = require("../dataModels/workoutModels")
-require("../dataModels/associations")
-
-async function startDb(){
-    try {
-        await sequelize.authenticate();
-        console.log("Connection has been established successfully.");
-
-        await sequelize.sync({force: true}).then(() => {
-            console.log("DB Sync was successful!")
-        })
-
-    } catch (error) {
-        console.error("Unable to connect to the database:", error.original);
-    }
-}
-
-startDb().then(e => {
-//     sequelize.drop().then(e => {
-//     console.log("Dropped all tables")
-// })
-    console.log("DB synced!")
-})
-// startDb().then(e => {
-//
-//     createMockData().then(e => {
-//         console.log("Mock Data created!!")
-//     }).catch(e => {
-//         console.error("Mock data failed!")
-//     })
-//     console.log("DB created!")
-// })
+const sequelize = require("../../config/database");
+const {Exercise, Workout, WorkoutDay, WorkoutProgram} = require("../models/workoutModels")
+require("../associations")
 
 async function createMockData(){
     try {
@@ -85,10 +52,10 @@ async function createWorkoutDays(){
             where: {
                 [Op.and]: [
                     {id: {
-                        [Op.gte]: i*2
+                            [Op.gte]: i*2
                         }},
                     {id: {
-                        [Op.lte]: i*2+1
+                            [Op.lte]: i*2+1
                         }}
                 ]
             }
