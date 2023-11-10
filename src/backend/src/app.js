@@ -1,18 +1,21 @@
 const express = require("express");
-const app = express();
+const cors = require("cors")
 
+const app = express();
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.use(cors())
 
-const port = 3000;
+const listenPort = 3000;
 
 const sequelize = require("./config/database.js");
 require("./dataModels/associations")
+const {render} = require("express/lib/application");
 require("./routes/workoutRouter")(app)
 require("./routes/profileRouter")(app)
 
 app.get("/", (req, res) => {
-    res.json({message: "Welcome to the workout tracker application."});
+    res.message("ok")
 })
 
 const initApp = async () => {
@@ -24,8 +27,8 @@ const initApp = async () => {
             console.log("DB Sync was successful!")
         })
 
-        app.listen(port, () => {
-            console.log(`Server is up and running at: http://localhost:${port}`);
+        app.listen(listenPort, () => {
+            console.log(`Server is up and running at: http://localhost:${listenPort}`);
         });
     } catch (error) {
         console.error("Unable to connect to the database:", error.original);
