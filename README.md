@@ -1,1 +1,1 @@
-# workoutTracker
+# Connected Fitness (ConFit) API
