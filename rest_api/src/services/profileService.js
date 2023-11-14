@@ -18,8 +18,8 @@ exports.getAllProfiles = (req, res) => {
         // res.header("Access-Control-Expose-Headers", "Content-Range")
         // res.header("Content-Range", `profiles 0-${data.length}/${data.length}`)
         // res.header("Content-Range", `bytes : 0-9/*`)
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        // res.header("Access-Control-Allow-Origin", "*");
+        // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.status(200).send(data)
     })
         .catch(err => {res.status(500).send({message: err.message || "Error in select all"})})
@@ -33,16 +33,13 @@ exports.getProfile = (req, res) => {
         return;
     }
     const eager = req.body.eager ? req.body.eager !== "0": false
-    console.log(eager)
+    let includeOptions = []
     if (eager) {
-        Profile.findByPk(req.params.id, {include: [{model: ProfileIdentification}, {model: ProfileSetting}]})
-            .then(data => {res.status(200).send(data)})
-            .catch(err => {res.status(500).send({message: err.message || "Error in profile id find with eager"})})
-    }else {
-        Profile.findByPk(req.params.id)
-            .then(data => {res.status(200).send(data)})
-            .catch(err => {res.status(500).send({message: err.message || "Error in profile id find"})})
+        includeOptions = [{model: ProfileIdentification}, {model: ProfileSetting}]
     }
+    Profile.findByPk(req.params.id, {include: includeOptions})
+        .then(data => {res.status(200).send(data)})
+        .catch(err => {res.status(404).send({message: err.message || "Profile not found"})})
 }
 
 // write methods for creating, updating and deleting profiles here
@@ -73,13 +70,13 @@ exports.updateProfile = (req, res) => {
                     message: "Profile was updated successfully!"
                 });
             } else {
-                res.status(500).send({
+                res.status(404).send({
                     message: `Cannot update Profile with id=${id}. Maybe Profile was not found!`
                 });
             }
         })
         .catch(err => {
-            res.status(500).send({
+            res.status(404).send({
                 message: "Could not update Profile with id=" + id
             });
         });
@@ -98,13 +95,13 @@ exports.deleteProfile = (req, res) => {
                     message: "Profile was deleted successfully!"
                 });
             } else {
-                res.status(500).send({
+                res.status(404).send({
                     message: `Cannot delete Profile with id=${id}. Maybe Profile was not found!`
                 });
             }
         })
         .catch(err => {
-            res.status(500).send({
+            res.status(404).send({
                 message: "Could not delete Profile with id=" + id
             });
         });
