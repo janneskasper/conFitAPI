@@ -15,11 +15,6 @@ exports.getAllProfiles = (req, res) => {
         ]}
     }
     Profile.findAll(options).then(data => {
-        // res.header("Access-Control-Expose-Headers", "Content-Range")
-        // res.header("Content-Range", `profiles 0-${data.length}/${data.length}`)
-        // res.header("Content-Range", `bytes : 0-9/*`)
-        // res.header("Access-Control-Allow-Origin", "*");
-        // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         res.status(200).send(data)
     })
         .catch(err => {res.status(500).send({message: err.message || "Error in select all"})})

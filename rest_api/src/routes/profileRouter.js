@@ -7,8 +7,8 @@ module.exports = (app, checkJwt) => {
 
     router.get("/", profileService.getAllProfiles)
     router.get("/:id", checkJwt, profileService.getProfile)
-    router.put("/:id", checkJwt, profileService.updateProfile)
-    router.post("/", profileService.createProfile)
-    router.delete("/:id", checkJwt, adminScope, profileService.deleteProfile)
+    router.put("/edit/:id", checkJwt, profileService.updateProfile)
+    router.post("/create", profileService.createProfile)
+    router.delete("/delete/:id", checkJwt, adminScope, profileService.deleteProfile)
     app.use("/api/users", router)
 }

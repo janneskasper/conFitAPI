@@ -42,6 +42,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Activity'
+  /activities/create:
     post:
       summary: Create a new activity
       description: Create a new activity

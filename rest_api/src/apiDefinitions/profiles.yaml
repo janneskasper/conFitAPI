@@ -90,7 +90,7 @@ paths:
                   $ref: '#/components/schemas/Profile'
         '500':
           description: Internal server error
-
+  /users/create:
     post:
       tags:
         - Profiles
@@ -109,7 +109,7 @@ paths:
         '500':
           description: Internal server error
 
-  /users/{id}:
+  /users/show/{id}:
     get:
       tags:
         - Profiles
@@ -132,6 +132,7 @@ paths:
           description: Bad request
         '404':
           description: Profile not found
+  /users/edit/{id}:
     put:
       tags:
         - Profiles
@@ -156,6 +157,7 @@ paths:
           description: Bad request
         '404':
           description: Profile not found
+  /users/delete/{id}:
     delete:
       tags:
         - Profiles
