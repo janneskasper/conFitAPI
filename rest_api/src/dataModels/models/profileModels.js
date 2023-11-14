@@ -3,7 +3,7 @@ const {GENDER_ENUM_LIST, UNIT_ENUM_LIST, PRIVACY_ENUM_LIST} = require("../enums"
 const sequelize = require("../../config/database")
 const {generateSalt, encryptPassword} = require("../../utils/encryption")
 
-const Profile = sequelize.define("profile",{
+const Profile = sequelize.define("profile", {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -49,18 +49,6 @@ const ProfileIdentification = sequelize.define("profileIdentification", {
         primaryKey: true,
         allowNull: false
     },
-    password: {
-        type: DataTypes.STRING,
-        get() {
-            return () => this.getDataValue("password")
-        }
-    },
-    salt: {
-        type: DataTypes.STRING,
-        get() {
-            return () => this.getDataValue("salt")
-        }
-    },
     email: {
         type: DataTypes.STRING
     }
@@ -85,17 +73,6 @@ const ProfileSetting = sequelize.define("profileSetting", {
     }
 })
 
-const pswdHookFnc = (profileIdentification) => {
-    if (profileIdentification.changed("password")) {
-        profileIdentification.salt = generateSalt()
-        profileIdentification.password = encryptPassword(profileIdentification.password(), profileIdentification.salt())
-    }
-}
-ProfileIdentification.beforeCreate(pswdHookFnc)
-ProfileIdentification.beforeUpdate(pswdHookFnc)
-ProfileIdentification.prototype.passwordCorrect = function(password) {
-    return encryptPassword(password, this.salt()) === this.password()
-}
 
 module.exports = {Profile, ProfileIdentification, ProfileSetting}
 

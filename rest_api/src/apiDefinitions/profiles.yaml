@@ -1,0 +1,174 @@
+components:
+  tags:
+    - name: Profiles
+      description: API for profiles in the system
+  schemas:
+    Profile:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        firstName:
+          type: string
+        lastName:
+          type: string
+        birthday:
+          type: string
+          format: date
+        gender:
+          type: string
+          description: Gender of the profile
+          enum:
+            - no info
+            - male
+            - female
+            - other
+        nationality:
+          type: string
+        weight:
+          type: array
+          items:
+            type: integer
+          description: Array of weight values
+        height:
+          type: integer
+          description: Height in centimeters
+        profileIdentification:
+          $ref: '#/components/schemas/ProfileIdentification'
+        profileSetting:
+          $ref: '#/components/schemas/ProfileSetting'
+
+    ProfileIdentification:
+      type: object
+      properties:
+        profileId:
+          type: integer
+        username:
+          type: string
+          description: The username of the profile
+        email:
+          type: string
+          description: Email associated with the profile
+        profile:
+          $ref: '#/components/schemas/Profile'
+
+    ProfileSetting:
+      type: object
+      properties:
+        profileId:
+          type: integer
+        unit:
+          type: string
+          description: Measurement unit preference
+          enum:
+            - metric
+            - imperial
+        profilePrivacy:
+          type: string
+          description: Profile privacy setting
+          enum:
+            - public
+            - private
+        profile:
+          $ref: '#/components/schemas/Profile'
+
+paths:
+  /users:
+    get:
+      tags:
+        - Profiles
+      summary: Get all profiles
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Profile'
+        '500':
+          description: Internal server error
+
+    post:
+      tags:
+        - Profiles
+      summary: Create a new profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Profile'
+      responses:
+        '201':
+          description: Profile created
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /users/{id}:
+    get:
+      tags:
+        - Profiles
+      summary: Get a profile by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the profile
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+        '400':
+          description: Bad request
+        '404':
+          description: Profile not found
+    put:
+      tags:
+        - Profiles
+      summary: Update a profile by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Profile'
+      responses:
+        '200':
+          description: Profile updated
+        '400':
+          description: Bad request
+        '404':
+          description: Profile not found
+    delete:
+      tags:
+        - Profiles
+      summary: Delete a profile by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the profile
+      responses:
+        '200':
+          description: Profile deleted
+        '404':
+          description: Profile not found

@@ -1,0 +1,64 @@
+components:
+  tags:
+    - name: Activities
+      description: API for activities in the system
+  schemas:
+    Activity:
+      type: object
+      properties:
+        id:
+          type: integer
+          unique: true
+          primaryKey: true
+        time:
+          type: string
+          format: date-time
+          allowNull: false
+          default: now
+        duration:
+          type: integer
+          allowNull: false
+          default: 0
+        profile:
+          $ref: '#/components/schemas/Profile'
+        exercise:
+          $ref: '#/components/schemas/Exercise'
+        workout:
+          $ref: '#/components/schemas/Workout'
+paths:
+  /activities:
+    get:
+      summary: Get all activities
+      description: Get all activities
+      operationId: getActivities
+      tags:
+        - Activities
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Activity'
+    post:
+      summary: Create a new activity
+      description: Create a new activity
+      operationId: createActivity
+      tags:
+        - Activities
+      requestBody:
+        description: Activity object that needs to be added to the database
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Activity'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activity'
