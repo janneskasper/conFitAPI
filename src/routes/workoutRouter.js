@@ -1,10 +1,10 @@
-module.exports = app => {
+module.exports = () => {
     const router = require("express").Router();
     const workoutService = require("../services/workoutService");
 
-    router.get("/", workoutService.findAll)
+    router.get("/", workoutService.getAll)
     // router.get("/:type", workoutService.findAllByType)
     // router.post("/", workoutService.create)
-    app.use("/api/workout", router)
+    return router
 }
 

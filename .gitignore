@@ -44,7 +44,7 @@ bower_components
 # Dependency directories
 */node_modules/
 */jspm_packages/
-
+node_modules/
 # Snowpack dependency directory (https://snowpack.dev/)
 */web_modules/
 
@@ -76,7 +76,6 @@ bower_components
 .yarn-integrity
 
 # dotenv environment variable files
-.env
 .env.development.local
 .env.test.local
 .env.production.local

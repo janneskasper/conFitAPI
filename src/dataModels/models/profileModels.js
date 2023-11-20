@@ -1,6 +1,6 @@
 const {Sequelize, DataTypes, Model} = require("sequelize");
 const {GENDER_ENUM_LIST, UNIT_ENUM_LIST, PRIVACY_ENUM_LIST} = require("../enums")
-const sequelize = require("../../config/database")
+const sequelize = require("../../config/databaseConfig")
 const {generateSalt, encryptPassword} = require("../../utils/encryption")
 
 const Profile = sequelize.define("profile", {

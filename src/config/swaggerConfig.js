@@ -22,5 +22,5 @@ module.exports = {
             },
         ],
     },
-    apis: ["./apiDefinitions/*.yaml"],
+    apis: ["./documentation/apiDefinitions/*.yaml"],
 };

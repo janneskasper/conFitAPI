@@ -1,5 +1,5 @@
 const {Sequelize, DataTypes, Model} = require("sequelize");
-const sequelize = require("../../config/database")
+const sequelize = require("../../config/databaseConfig")
 
 const Achievement = sequelize.define("achievement", {
     id: {

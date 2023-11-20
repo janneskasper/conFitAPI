@@ -1,5 +1,5 @@
 const {Op} = require("sequelize")
-const sequelize = require("../../config/database");
+const sequelize = require("../../config/databaseConfig");
 const {Exercise, Workout, WorkoutDay, WorkoutProgram} = require("../models/workoutModels")
 require("../associations")
 
