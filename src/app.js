@@ -9,6 +9,7 @@ const swaggerUi = require("swagger-ui-express");
 
 const swaggerConfig = require("./config/swaggerConfig")
 const router = require("./routes/mainRouter")
+require("./dataModels/associations")
 
 // swagger documentation setup
 const specs = swaggerJsdoc(swaggerConfig)

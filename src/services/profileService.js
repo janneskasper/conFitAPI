@@ -1,6 +1,6 @@
 const db = require("../config/databaseConfig")
 const {Op} = require("sequelize")
-const {ProfileInterests, Profile, ProfileIdentification, ProfileSetting} = require("../dataModels/models/profileModels")
+const { Profile, ProfileIdentification, ProfileSetting} = require("../dataModels/models/profileModels")
 const {CLIENT_ERROR,SUCCESS,SERVER_ERROR,INFORMATION,REDIRECT} = require("../utils/responseCodes")
 const {NOTFOUND} = require("sqlite3");
 
@@ -29,7 +29,7 @@ exports.getById = (req, res) => {
         });
         return;
     }
-    const eager = req.body.eager ? req.body.eager !== "0": false
+    const eager = req.query.eager ? req.query.eager !== "0": false
     let includeOptions = []
     if (eager) {
         includeOptions = [{model: ProfileIdentification}, {model: ProfileSetting}]
@@ -45,11 +45,12 @@ exports.createOne = (req, res) => {
             message: "Content can not be empty!"
         })
     }
+    console.log(req.body)
     const returnVal = req.params.returnVal ? req.params.returnVal !== "0": false
-    Profile.create(req.body, {include: [ProfileInterests, ProfileIdentification]})
+    Profile.create(req.body, {include: [ProfileIdentification, ProfileSetting]})
         .then(data => {if (returnVal) res.status(SUCCESS.CREATED).send(data)
         else res.status(SUCCESS.CREATED).send({message: "Profile created successfully"})})
-        .catch(err => {res.status(SERVER_ERROR.INTERNAL_SERVER_ERROR).send({message: err.message || "Error in profile create"})})
+        .catch(err => {res.status(SERVER_ERROR.INTERNAL_SERVER_ERROR).send({message: err.message + "Profile Create error" || "Error in profile create"})})
 }
 
 exports.updateById = (req, res) => {
